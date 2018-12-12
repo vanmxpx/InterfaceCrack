@@ -4,9 +4,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InterfaceCrack"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=System"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Diplom work" Height="430.545" Width="843.563" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Window.Resources>
+        <componentModel:BackgroundWorker x:Key="BackgroundWorker" 
+      WorkerReportsProgress="True" WorkerSupportsCancellation="True"
+      DoWork="backgroundWorker_DoWork" ProgressChanged="backgroundWorker_ProgressChanged" 
+      RunWorkerCompleted="backgroundWorker_RunWorkerCompleted"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <Grid x:Name="___No_Name_" Margin="0,0,4,2">
+        <oxy:PlotView Model="{Binding Model}" HorizontalAlignment="Left" Width="521" />
+        <Button x:Name="butCalculate" Content="Calculate" HorizontalAlignment="Left" Margin="536,322,0,0" VerticalAlignment="Top" Width="75" Cursor="Hand" Click="butCalculate_Click"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="266" Margin="526,14,0,0" TextWrapping="Wrap" Text="Log:&#xD;&#xA;" VerticalAlignment="Top" Width="233"/>
+        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="21" Margin="526,285,0,0" VerticalAlignment="Top" Width="233"/>
+        <TextBox x:Name="textBoxN" HorizontalAlignment="Left" Height="23" Margin="548,0,0,12" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="50" RenderTransformOrigin="0.471,0.435" AutomationProperties.Name="textBoxN" Text="50"/>
+        <TextBox x:Name="textBoxH" HorizontalAlignment="Left" Height="23" Margin="626,0,0,12" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="50" RenderTransformOrigin="0.5,0.435" AutomationProperties.Name="textBoxH" Text="0.05">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.383"/>
+                    <TranslateTransform X="-0.009" Y="-0.002"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <TextBox x:Name="textBoxA" HorizontalAlignment="Left" Height="23" Margin="700,0,0,12" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="50" AutomationProperties.Name="textBoxA" Text="1"/>
+        <Label Content="n" HorizontalAlignment="Left" Margin="548,0,0,35" VerticalAlignment="Bottom"/>
+        <Label Content="h" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="626,0,0,35"/>
+        <Label Content="a" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="700,0,0,35"/>
+        <Button Content="Neural Network" HorizontalAlignment="Left" Margin="626,322,0,0" VerticalAlignment="Top" Width="102" Click="Button_Click"/>
+        <TextBox x:Name="textBoxv1" HorizontalAlignment="Left" Height="23" Margin="773,50,0,0" TextWrapping="Wrap" Text="0.3" VerticalAlignment="Top" Width="50" />
+        <TextBox x:Name="textBoxmu1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="50" Margin="772,158,0,0"/>
+        <TextBox x:Name="textBoxv2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0.2" VerticalAlignment="Top" Width="50" Margin="772,104,0,0"/>
+        <TextBox x:Name="textBoxmu2" HorizontalAlignment="Left" Height="23" Margin="772,207,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="49"/>
+        <Label HorizontalAlignment="Left" Margin="790,40,0,0" VerticalAlignment="Top"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="746,322,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_Clear"/>
+        <Label Content="mu2" HorizontalAlignment="Left" Margin="773,181,0,0" VerticalAlignment="Top"/>
+        <Label Content="mu1" HorizontalAlignment="Left" Margin="772,132,0,0" VerticalAlignment="Top"/>
+        <Label Content="nu2" HorizontalAlignment="Left" Margin="773,78,0,0" VerticalAlignment="Top"/>
+        <Label Content="nu1" HorizontalAlignment="Left" Margin="773,22,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
