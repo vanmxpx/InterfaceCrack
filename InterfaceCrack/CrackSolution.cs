@@ -218,11 +218,11 @@ namespace InterfaceCrack
         {
             return Math.Log(answer + Math.Sqrt(answer * answer + 1));
         }
-        double[] globalSolutione = new double[46];
+        double[] globalSolution = new double[0];
         private double div = 0.01, dec = 0;
         public double[] Calculate(int n, double h, double a, double nu1, double nu2, double mu1, double mu2) //коеф пуассона, модуль сдвига
         {
-            //backgroundWorker.ReportProgress(0);
+            backgroundWorker.ReportProgress(0);
 
             this.h = h;
             this.a = a;
@@ -335,10 +335,10 @@ namespace InterfaceCrack
                     }
                 }
                 #endregion
-                //printer(p11 + Environment.NewLine);
+                printer(p11 + Environment.NewLine);
                 p11array[i] = p11;
                 detarray[i] = _matrixA.Determinant;
-                //printer(detarray[i] + Environment.NewLine);
+                printer(detarray[i] + Environment.NewLine);
 
                 // when det < 0 stop
                 if (detarray[i] < 0.0f)
@@ -350,49 +350,83 @@ namespace InterfaceCrack
                         Calculate(n, h, a, nu1, nu2, mu1, mu2);
                         break;
                     }
-                    //printer("*---------------------------*" + Environment.NewLine);
+                    printer("*---------------------------*" + Environment.NewLine);
                     printer("h = " + h + Environment.NewLine);//p11 determ
                     printer($"Critical P {p11array[i - 1]}  {Environment.NewLine}");/*{detarray[i - 1]}*/
-                    //printer($"{p11array[i]} {detarray[i]}{Environment.NewLine}");
-                    //for (int last = i; last < 101; last++)
-                       // backgroundWorker.ReportProgress(last);
-                    //printer("*---------------------------*" + Environment.NewLine);
+                    printer($"{p11array[i]} {detarray[i]}{Environment.NewLine}");
+                    for (int last = i; last < 101; last++)
+                        backgroundWorker.ReportProgress(last);
+                    printer("*---------------------------*" + Environment.NewLine);
                     div = 0.01; dec = 0;
                     Printrepres(_matrixA.AbstractResolutions);
-                    double[] answ = new double[23];
+                    double[] answ = new double[n/2];
                     double[] tmp = _matrixA.AbstractResolutions;
-                    if (mu1 < mu2)
-                    {
-                        for (int v = 0; v < 23; v++)
-                        {
-                            answ[v] = tmp[52 + v];
-                        }
-                    }
-                    else
-                    {
-                        for (int v = 0; v < 23; v++)
-                        {
-                            answ[v] = tmp[97 - v];
-                        }
-                    }
-                    for (int v = 0; v < 23; v++)
-                    {
-                        globalSolutione[23 + v] = answ[22 - v];
-                        globalSolutione[v] = answ[v];
-                    }
-                    Printrepres(globalSolutione);
-                    return globalSolutione;
+                    globalSolution = new double[n];
+
+                    globalSolution = GetPayload(tmp, n);
+                    //globalSolution = MakePretty(tmp, n);
+
+                    Printrepres(globalSolution);
+                    return globalSolution;
                 }
                 backgroundWorker.ReportProgress((int)(i / dec / 2));
             }
-            return globalSolutione;
+            return globalSolution;
         }
 
+        private double[] GetPayload(double[] tmp, int n)
+        {
+            double[] res = new double[n];
+
+            if (mu1 < mu2)
+            {
+                for (int v = 0; v < n; v++)
+                {
+                    res[v] = tmp[n + v];
+                }
+            }
+            else
+            {
+                for (int v = 0; v < n; v++)
+                {
+                    res[v] = tmp[n * 2 - 1 - v];
+                }
+            }
+
+            return res;
+        }
+
+        private double[] MakePretty(double[] tmp, int n)
+        {
+            double[] res = new double[n];
+            double[] answ = new double[n/2];
+            if (mu1 < mu2)
+            {
+                for (int v = 0; v < n / 2; v++)
+                {
+                    answ[v] = tmp[n + v];
+                }
+            }
+            else
+            {
+                for (int v = 0; v < n / 2; v++)
+                {
+                    answ[v] = tmp[n * 2 - 1 - v];
+                }
+            }
+            for (int v = 0; v < n / 2; v++)
+            {
+                // Turbo mode
+                res[n / 2 - 1 + v] = answ[n / 2 - 1 - v];
+                res[v] = answ[v];
+            }
+            return res;
+        }
         private void Printrepres(double[] matrixAAbstractResolutions)
         {
             printer($"answrs = {Environment.NewLine}");
             
-            for (int i = 0; i < 23; i++)
+            for (int i = 0; i < matrixAAbstractResolutions.Length; i++)
                 printer($"{matrixAAbstractResolutions[i]},{Environment.NewLine}");
         }
     }
