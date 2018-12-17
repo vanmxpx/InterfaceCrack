@@ -32,7 +32,6 @@ namespace InterfaceCrack
         double[] _tArray;
         double[] p11array;
         double[] detarray;
-        double[] Answer;
 
         public CrackSolution(Action<string> printer, BackgroundWorker backgroundWorker)
         {
@@ -85,6 +84,8 @@ namespace InterfaceCrack
 
         internal double[] CalculateWithNeuralNetworkTest(double h, double a, double v1, double v2, double mu1, double mu2)
         {
+            this.mu1 = mu1;
+            this.mu2 = mu2;
             var number = new[] { h, v1, v2 };
             double[][] w1 = new double[3][];
             double[][] w2 = new double[500][]; 

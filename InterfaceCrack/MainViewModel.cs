@@ -46,7 +46,7 @@ namespace InterfaceCrack
             //    nextHalf = answers.Length / 2;, BrokenLineColor = OxyColors.Bisque
             //}
 
-            var seriesUp = new LineSeries { Title = label, MarkerType = (MarkerType)PlotStyle, BrokenLineColor = OxyColor.FromUInt32((uint)new Random().Next(0,600))};
+            var seriesUp = new LineSeries { Title = PlotStyle % 2 == 0 ? "Numerical Solution" : "Neural Network", MarkerType = (MarkerType)PlotStyle, BrokenLineColor = OxyColor.FromUInt32((uint)new Random().Next(0,600))};
             for (int i = nextHalf; i < answers.Length; i++)
                 seriesUp.Points.Add(new DataPoint(i - answers.Length / 2, 1 / (1 + Math.Exp(-answers[i]))));
 
